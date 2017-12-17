@@ -4,4 +4,9 @@ contract Accountability {
   function Accountability() {
     // constructor
   }
+
+  function () payable{
+
+  }
+
 }
