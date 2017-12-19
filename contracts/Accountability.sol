@@ -14,7 +14,7 @@ contract Accountability {
 
   /* check if this works */
   function refundOriginator(){
-    originator.send(balance);
+    originator.transfer(balance);
   }
 
   /* Function that enables the contract to receive funds */
