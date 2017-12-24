@@ -18,8 +18,34 @@ const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});
 window.App = {
   start: function() {
     var self = this;
+    Accountability.setProvider(web3.currentProvider);
+    renderGoal();
   },
 };
+
+function renderGoal() {
+  console.log("in renderGoal")
+  Accountability.deployed().then(function(i) {
+    console.log("in Accountability.deployed()")
+    /* stores the return of the function i.getGoal.call(1) inside the b value and passes it to buildGoal.
+    Then, append the result of that buildGoal() to goal-list */
+    i.getGoal.call().then(function(g) {
+      console.log("got goal!");
+     $("#goal-list").append(buildGoal(g));
+    });
+  });
+}
+
+/* initialize a div, give it a class and append to it
+it knows where to append itself because buildProduct() is called from inside renderGoal(), by #goal-list which is a
+row class in index.html */
+function buildGoal(goal) {
+  let node = $("<div/>");
+  node.addClass("col-sm-3 text-center col-margin-bottom-1");
+  // node.append("<img src='https://ipfs.io/ipfs/" + product[3] + "' width='150px' />");
+  node.append("<div>" + goal[0]+ "</div>");
+  return node;
+}
 
 window.addEventListener('load', function() {
   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
