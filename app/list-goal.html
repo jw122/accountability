@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Accountability</title>
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+ <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="./app.js"></script>
+</head>
+<body>
+ <div class="container">
+  <h1>Set a Goal</h1>
+  <div class="container">
+   <div class="row">
+    <div style="display: none;" class="alert alert-success" id="msg"></div>
+    <form class="form-horizontal col-sm-5" id="add-item-to-store">
+     <div class="form-group">
+      <label for="goal-name" class="col-sm-2 control-label">Name</label>
+      <div class="col-sm-10">
+       <input type="text" name="product-name" class="form-control" id="goal-name" placeholder="i.e. Learn a new language" required="required"></input>
+      </div>
+     </div>
+     <div class="form-group">
+      <label for="goal-description" class="col-sm-2 control-label">Description</label>
+      <div class="col-sm-10">
+       <textarea class="form-control" name="goal-description" rows="8" id="product-description" placeholder="Enter detailed goal description" required="required"></textarea>
+      </div>
+     </div>
+     <div class="form-group">
+      <label for="judge1" class="col-sm-2 control-label">Judge #1 Email</label>
+      <div class="col-sm-10">
+       <input type="text" name="product-name" class="form-control" id="judge1" placeholder="Email address of judge #1" required="required"></input>
+      </div>
+     </div>
+     <div class="form-group">
+      <label for="judge2" class="col-sm-2 control-label">Judge #2 Email</label>
+      <div class="col-sm-10">
+       <input type="text" name="product-name" class="form-control" id="judge2" placeholder="Email address of judge #2" required="required"></input>
+      </div>
+     </div>
+     <div class="form-group">
+      <label for="judge3" class="col-sm-2 control-label">Judge #3 Email</label>
+      <div class="col-sm-10">
+       <input type="text" name="product-name" class="form-control" id="judge3" placeholder="Email address of judge #3" required="required"></input>
+      </div>
+     </div>
+
+
+     <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+       <button type="submit" class="btn btn-primary">Add Goal</button>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</body>
+</html>

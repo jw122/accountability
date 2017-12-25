@@ -40,10 +40,12 @@ function renderGoal() {
 it knows where to append itself because buildProduct() is called from inside renderGoal(), by #goal-list which is a
 row class in index.html */
 function buildGoal(goal) {
+
   let node = $("<div/>");
   node.addClass("col-sm-3 text-center col-margin-bottom-1");
   // node.append("<img src='https://ipfs.io/ipfs/" + product[3] + "' width='150px' />");
-  node.append("<div>" + goal[0]+ "</div>");
+  node.append("<div>" + goal[0]+ "</div>"); // name of the goal
+  node.append("<div>" + goal[1]+ "</div>"); // description of the goal
   return node;
 }
 
