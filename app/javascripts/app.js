@@ -20,6 +20,24 @@ window.App = {
     var self = this;
     Accountability.setProvider(web3.currentProvider);
     renderGoal();
+
+    // Event triggered when user clicks save. 'add-goal' is the id of the form
+    $("#add-goal").submit(function(event) {
+      // serialize the input in this field
+       const req = $("#add-goal").serialize();
+       console.log("adding goal!")
+       let params = JSON.parse('{"' + req.replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+       let decodedParams = {}
+
+       Object.keys(params).forEach(function(v) {
+        decodedParams[v] = decodeURIComponent(decodeURI(params[v]));
+       });
+
+       // call on the saveGoal function, passing in the fields
+       saveGoalToBlockchain(decodedParams);
+       event.preventDefault();
+    });
+
   },
 };
 
@@ -47,6 +65,21 @@ function buildGoal(goal) {
   node.append("<div>" + goal[0]+ "</div>"); // name of the goal
   node.append("<div>" + goal[1]+ "</div>"); // description of the goal
   return node;
+}
+
+/* In this function, we invoke a contract method, setGoal() and pass in the parameters from the form that the user
+filled in. We leave the deliverableUrl blank since the goal has not been completed yet */
+function saveGoalToBlockchain(params) {
+  console.log(params);
+
+  Accountability.deployed().then(function(i) {
+    i.setGoal(params["goal-name"], params["goal-description"], "", params["judge1"],
+    params["judge2"], params["judge3"], params["evil-org"], {from: web3.eth.accounts[0], gas: 440000}).then(function(f) {
+   console.log(f);
+   $("#msg").show();
+   $("#msg").html("Your goal was successfully added to your store!");
+  })
+ });
 }
 
 window.addEventListener('load', function() {

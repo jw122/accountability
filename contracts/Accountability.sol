@@ -35,6 +35,8 @@ contract Accountability {
     originator.transfer(this.balance);
   }
 
+  /* TODO: create a function that sends out the funds when time is up and goal wasn't achieved */
+
   /* Function that enables the contract to receive funds */
   function () payable{
 
