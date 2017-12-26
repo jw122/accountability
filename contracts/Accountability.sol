@@ -21,7 +21,7 @@ contract Accountability {
   }
 
   function setGoal(string _name, string _description, string _deliverableUrl,
-    string _judge1Email, string _judge2Email, string _judge3Email, string _evilOrg){
+    string _judge1Email, string _judge2Email, string _judge3Email, string _evilOrg) payable {
 
     goal = Goal(_name, _description, _deliverableUrl, _judge1Email, _judge2Email, _judge3Email, _evilOrg);
   }

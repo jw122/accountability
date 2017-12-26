@@ -74,10 +74,10 @@ function saveGoalToBlockchain(params) {
 
   Accountability.deployed().then(function(i) {
     i.setGoal(params["goal-name"], params["goal-description"], "", params["judge1"],
-    params["judge2"], params["judge3"], params["evil-org"], {from: web3.eth.accounts[0], gas: 440000}).then(function(f) {
+    params["judge2"], params["judge3"], params["evil-org"], {from: web3.eth.accounts[0], gas: 440000, value: web3.toWei(params["deposit"], "ether")}).then(function(f) {
    console.log(f);
    $("#msg").show();
-   $("#msg").html("Your goal was successfully added to your store!");
+   $("#msg").html("Your goal was successfully added!");
   })
  });
 }
