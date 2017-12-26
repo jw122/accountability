@@ -38,6 +38,12 @@ window.App = {
        event.preventDefault();
     });
 
+    if($("#goal-details").length > 0) {
+     //This is the goal details page
+     renderGoalDetails();
+    }
+
+
   },
 };
 
@@ -80,6 +86,28 @@ function saveGoalToBlockchain(params) {
    $("#msg").html("Your goal was successfully added!");
   })
  });
+}
+
+function renderGoalDetails() {
+ Accountability.deployed().then(function(i) {
+  i.getGoal.call().then(function(p) {
+   console.log(p);
+   let content = "";
+
+   // FOR READING FROM IPFS
+   // ipfs.cat(p[4]).then(function(stream) {
+   //  stream.on('data', function(chunk) {
+   //  // do stuff with this chunk of data
+   //  content += chunk.toString();
+   //  $("#product-desc").append("<div>" + content+ "</div>");
+   //  })
+   // });
+
+   $("#goal-name").append("<div>" + p[0]+ "</div>");
+   $("#goal-desc").append("<div>" + p[1]+ "</div>");
+
+  })
+ })
 }
 
 window.addEventListener('load', function() {
