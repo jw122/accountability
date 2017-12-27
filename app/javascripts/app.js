@@ -12,14 +12,22 @@ import accountability_artifacts from '../../build/contracts/Accountability.json'
 var Accountability = contract(accountability_artifacts);
 
 const ipfsAPI = require('ipfs-api');
-
+const ethUtil = require('ethereumjs-util');
 const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});
 
 window.App = {
   start: function() {
     var self = this;
+    var reader;
     Accountability.setProvider(web3.currentProvider);
+
     renderGoal();
+
+    $("#goal-image").change(function(event) {
+      const file = event.target.files[0]
+      reader = new window.FileReader()
+      reader.readAsArrayBuffer(file)
+    });
 
     // Event triggered when user clicks save. 'add-goal' is the id of the form
     $("#add-goal").submit(function(event) {
@@ -38,12 +46,33 @@ window.App = {
        event.preventDefault();
     });
 
+    // Event triggered when user clicks add deliverable. 'submit-deliverable' is the id of the form
+    $("#submit-deliverable").submit(function(event) {
+      // serialize the input in this field
+       const req = $("#submit-deliverable").serialize();
+       console.log("adding deliverable link!")
+       let params = JSON.parse('{"' + req.replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+       let decodedParams = {}
+
+       Object.keys(params).forEach(function(v) {
+        decodedParams[v] = decodeURIComponent(decodeURI(params[v]));
+       });
+
+       // call on the saveGoal function, passing in the fields
+       saveDeliverableLink(decodedParams);
+       event.preventDefault();
+    });
+
+    $("#submit-image").submit(function(event) {
+       // the reader already has the image contents
+       saveDeliverableImage(reader);
+       event.preventDefault();
+    });
+
     if($("#goal-details").length > 0) {
      //This is the goal details page
      renderGoalDetails();
     }
-
-
   },
 };
 
@@ -88,23 +117,99 @@ function saveGoalToBlockchain(params) {
  });
 }
 
+function saveDeliverableLink(params) {
+  let descId;
+  // First, save on IPFS
+  saveTextBlobOnIpfs(params["deliverable"]).then(function(id){
+    descId = id;
+    // trigger function in contract that edits the deliverable
+    saveDeliverableLinkToBlockchain(descId);
+  })
+}
+
+function saveDeliverableImage(reader) {
+  let imageId;
+  // First, save on IPFS
+  saveTextBlobOnIpfs(reader).then(function(id){
+    imageId = id;
+    // trigger function in contract that edits the image
+    saveDeliverableImageToBlockchain(imageId);
+  })
+}
+
+function saveDeliverableLinkToBlockchain(link) {
+  console.log("saving deliverable link to blockchain:", link);
+
+  Accountability.deployed().then(function(i) {
+    i.setDeliverableLink(link, {from: web3.eth.accounts[0], gas: 440000}).then(function(f) {
+   console.log(f);
+   $("#msg").show();
+   $("#msg").html("Your deliverable link was successfully added!");
+  })
+ });
+}
+
+function saveDeliverableImageToBlockchain(link) {
+  console.log("saving deliverable image to blockchain:", link);
+
+  Accountability.deployed().then(function(i) {
+    i.setDeliverableImage(link, {from: web3.eth.accounts[0], gas: 440000}).then(function(f) {
+   console.log(f);
+   $("#msg").show();
+   $("#msg").html("Your deliverable image was successfully added!");
+  })
+ });
+}
+
+
+function saveTextBlobOnIpfs(blob) {
+ return new Promise(function(resolve, reject) {
+  const descBuffer = Buffer.from(blob, 'utf-8');
+  ipfs.add(descBuffer)
+  .then((response) => {
+   console.log(response)
+   resolve(response[0].hash);
+  }).catch((err) => {
+   console.error(err)
+   reject(err);
+  })
+ })
+}
+
+function saveImageOnIpfs(reader) {
+ return new Promise(function(resolve, reject) {
+  const buffer = Buffer.from(reader.result);
+  ipfs.add(buffer)
+  .then((response) => {
+   console.log(response)
+   resolve(response[0].hash);
+  }).catch((err) => {
+   console.error(err)
+   reject(err);
+  })
+ })
+}
+
 function renderGoalDetails() {
  Accountability.deployed().then(function(i) {
   i.getGoal.call().then(function(p) {
    console.log(p);
    let content = "";
 
-   // FOR READING FROM IPFS
-   // ipfs.cat(p[4]).then(function(stream) {
-   //  stream.on('data', function(chunk) {
-   //  // do stuff with this chunk of data
-   //  content += chunk.toString();
-   //  $("#product-desc").append("<div>" + content+ "</div>");
-   //  })
-   // });
+   // Reading from IPFS
+   if (p[2].length > 0) {
+     ipfs.cat(p[2]).then(function(stream) {
+      stream.on('data', function(chunk) {
+      // append the read chunk to the content string
+      content += chunk.toString();
+      $("#goal-final-deliverable").append("<div>" + content+ "</div>");
+      })
+     });
+   }
 
    $("#goal-name").append("<div>" + p[0]+ "</div>");
    $("#goal-desc").append("<div>" + p[1]+ "</div>");
+   $("#goal-final-image").append("<img src='https://ipfs.io/ipfs/" + p[3] + "' width='250px' />");
 
   })
  })

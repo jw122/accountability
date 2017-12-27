@@ -35,6 +35,8 @@
     "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
-    "ipfs-api": "^17.2.5"
+    "ethereumjs-util": "^5.1.2",
+    "express": "^4.16.2",
+    "ipfs-api": "14.1.2"
   }
 }

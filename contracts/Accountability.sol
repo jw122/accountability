@@ -9,6 +9,7 @@ contract Accountability {
     string name;
     string description;
     string deliverableUrl;
+    string deliverableImage;
     string judge1Email;
     string judge2Email;
     string judge3Email;
@@ -21,14 +22,22 @@ contract Accountability {
   }
 
   function setGoal(string _name, string _description, string _deliverableUrl,
-    string _judge1Email, string _judge2Email, string _judge3Email, string _evilOrg) payable {
+    string _deliverableImage, string _judge1Email, string _judge2Email, string _judge3Email, string _evilOrg) payable {
 
-    goal = Goal(_name, _description, _deliverableUrl, _judge1Email, _judge2Email, _judge3Email, _evilOrg);
+    goal = Goal(_name, _description, _deliverableUrl, _deliverableImage, _judge1Email, _judge2Email, _judge3Email, _evilOrg);
   }
 
-  function getGoal() returns (string, string, string, string, string, string, string){
-    return (goal.name, goal.description, goal.deliverableUrl, goal.judge1Email, goal.judge2Email,
+  function getGoal() returns (string, string, string, string, string, string, string, string){
+    return (goal.name, goal.description, goal.deliverableUrl, goal.deliverableImage, goal.judge1Email, goal.judge2Email,
       goal.judge3Email, goal.evilOrg);
+  }
+
+  function setDeliverableLink(string _link){
+    goal.deliverableUrl = _link;
+  }
+
+  function setDeliverableImage(string _link){
+    goal.deliverableImage = _link;
   }
 
   function refundOriginator(){
