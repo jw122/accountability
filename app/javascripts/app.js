@@ -96,7 +96,7 @@ function buildGoal(goal) {
 
   let node = $("<div/>");
   node.addClass("col-sm-3 text-center col-margin-bottom-1");
-  // node.append("<img src='https://ipfs.io/ipfs/" + product[3] + "' width='150px' />");
+  // node.append("<img src='https://ipfs.io/ipfs/" + product[3] + "' width='150px' />"); // image of the goal
   node.append("<div>" + goal[0]+ "</div>"); // name of the goal
   node.append("<div>" + goal[1]+ "</div>"); // description of the goal
   return node;
@@ -108,8 +108,8 @@ function saveGoalToBlockchain(params) {
   console.log(params);
 
   Accountability.deployed().then(function(i) {
-    i.setGoal(params["goal-name"], params["goal-description"], "", params["judge1"],
-    params["judge2"], params["judge3"], params["evil-org"], {from: web3.eth.accounts[0], gas: 440000, value: web3.toWei(params["deposit"], "ether")}).then(function(f) {
+    i.setGoal(params["goal-name"], params["goal-description"], "", "", params["judge1"],
+    params["judge2"], params["judge3"], {from: web3.eth.accounts[0], gas: 440000, value: web3.toWei(params["deposit"], "ether")}).then(function(f) {
    console.log(f);
    $("#msg").show();
    $("#msg").html("Your goal was successfully added!");
@@ -130,7 +130,7 @@ function saveDeliverableLink(params) {
 function saveDeliverableImage(reader) {
   let imageId;
   // First, save on IPFS
-  saveTextBlobOnIpfs(reader).then(function(id){
+  saveImageOnIpfs(reader).then(function(id){
     imageId = id;
     // trigger function in contract that edits the image
     saveDeliverableImageToBlockchain(imageId);
@@ -209,7 +209,10 @@ function renderGoalDetails() {
 
    $("#goal-name").append("<div>" + p[0]+ "</div>");
    $("#goal-desc").append("<div>" + p[1]+ "</div>");
-   $("#goal-final-image").append("<img src='https://ipfs.io/ipfs/" + p[3] + "' width='250px' />");
+   if (p[3].length > 0){
+     $("#goal-final-image").append("<img src='https://ipfs.io/ipfs/" + p[3] + "' width='250px' />");
+   }
+
 
   })
  })
