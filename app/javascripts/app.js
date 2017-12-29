@@ -10,6 +10,7 @@ import accountability_artifacts from '../../build/contracts/Accountability.json'
 
 // Accountability is our usable abstraction, which we'll use through the code below.
 var Accountability = contract(accountability_artifacts);
+// use contract at specific address: var instance = MetaCoin.at("0x1234...");
 
 const ipfsAPI = require('ipfs-api');
 const ethUtil = require('ethereumjs-util');
@@ -184,31 +185,31 @@ function saveDeliverableImageToBlockchain(link) {
 
 
 function saveTextBlobOnIpfs(blob) {
- return new Promise(function(resolve, reject) {
-  const descBuffer = Buffer.from(blob, 'utf-8');
-  ipfs.add(descBuffer)
-  .then((response) => {
-   console.log(response)
-   resolve(response[0].hash);
-  }).catch((err) => {
-   console.error(err)
-   reject(err);
-  })
- })
+  return new Promise(function(resolve, reject) {
+    const descBuffer = Buffer.from(blob, 'utf-8');
+    ipfs.add(descBuffer)
+    .then((response) => {
+     console.log(response)
+     resolve(response[0].hash);
+    }).catch((err) => {
+     console.error(err)
+     reject(err);
+    })
+  });
 }
 
 function saveImageOnIpfs(reader) {
- return new Promise(function(resolve, reject) {
-  const buffer = Buffer.from(reader.result);
-  ipfs.add(buffer)
-  .then((response) => {
-   console.log(response)
-   resolve(response[0].hash);
-  }).catch((err) => {
-   console.error(err)
-   reject(err);
-  })
- })
+   return new Promise(function(resolve, reject) {
+    const buffer = Buffer.from(reader.result);
+    ipfs.add(buffer)
+    .then((response) => {
+     console.log(response)
+     resolve(response[0].hash);
+    }).catch((err) => {
+     console.error(err)
+     reject(err);
+    })
+  });
 }
 
 function renderGoalDetails() {
@@ -217,8 +218,14 @@ function renderGoalDetails() {
    console.log(p);
    let content = "";
 
+   if (p[2].length > 0 || p[3].length > 0) {
+     $("#judge-section").show();
+   } else {
+     $("#judge-section").hide();
+   }
+
    // Reading from IPFS
-   if (p[2].length > 0) {
+   if (p[2].length > 0) { // if there is actually a deliverable link
      ipfs.cat(p[2]).then(function(stream) {
       stream.on('data', function(chunk) {
       // append the read chunk to the content string
@@ -230,11 +237,11 @@ function renderGoalDetails() {
 
    $("#goal-name").append("<div>" + p[0]+ "</div>");
    $("#goal-desc").append("<div>" + p[1]+ "</div>");
-   if (p[3].length > 0){
+   if (p[3].length > 0){ // if there is actually a deliverable image
      $("#goal-final-image").append("<img src='https://ipfs.io/ipfs/" + p[3] + "' width='250px' />");
    }
   })
- })
+})
 }
 
 function castVote(vote){

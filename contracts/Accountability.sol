@@ -43,6 +43,9 @@ contract Accountability {
 
   function castApprovalVote(){
     approvalCount += 1;
+    if (approvalCount == 2) {
+      return refundOriginator();
+    }
   }
 
   function refundOriginator(){
