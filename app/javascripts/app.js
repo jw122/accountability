@@ -69,8 +69,22 @@ window.App = {
        event.preventDefault();
     });
 
-    $("#submit-vote").submit(function(event) {
-      var vote = document.getElementById("vote").value;
+    $("#submit-vote1").submit(function(event) {
+      var vote = document.getElementById("vote1").value;
+      console.log("vote submitted: ", vote);
+      castVote(vote);
+      event.preventDefault();
+    });
+
+    $("#submit-vote2").submit(function(event) {
+      var vote = document.getElementById("vote2").value;
+      console.log("vote submitted: ", vote);
+      castVote(vote);
+      event.preventDefault();
+    });
+
+    $("#submit-vote3").submit(function(event) {
+      var vote = document.getElementById("vote3").value;
       console.log("vote submitted: ", vote);
       castVote(vote);
       event.preventDefault();
