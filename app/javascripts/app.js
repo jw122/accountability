@@ -69,6 +69,13 @@ window.App = {
        event.preventDefault();
     });
 
+    $("#submit-vote").submit(function(event) {
+      var vote = document.getElementById("vote").value;
+      console.log("vote submitted: ", vote);
+      castVote(vote);
+      event.preventDefault();
+    });
+
     if($("#goal-details").length > 0) {
      //This is the goal details page
      renderGoalDetails();
@@ -212,10 +219,23 @@ function renderGoalDetails() {
    if (p[3].length > 0){
      $("#goal-final-image").append("<img src='https://ipfs.io/ipfs/" + p[3] + "' width='250px' />");
    }
-
-
   })
  })
+}
+
+function castVote(vote){
+  if (vote == "approve") {
+    Accountability.deployed().then(function(i){
+      i.castApprovalVote({from: web3.eth.accounts[0], gas: 440000}).then(function(ret) {
+       console.log(ret);
+       $("#msg").show();
+       $("#msg").html("Your approval vote was successfully cast. Thank you for voting!");
+      })
+    })
+  } else {
+    $("#msg").show();
+    $("#msg").html("Thank you for voting!");
+  }
 }
 
 window.addEventListener('load', function() {

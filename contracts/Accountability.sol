@@ -5,6 +5,7 @@ contract Accountability {
   address public originator; // address of the individual being held accountable
   /*mapping (uint => Goal) goalMap;*/
   Goal public goal;
+  uint public approvalCount;
 
   struct Goal {
     string name;
@@ -38,6 +39,10 @@ contract Accountability {
 
   function setDeliverableImage(string _link){
     goal.deliverableImageUrl = _link;
+  }
+
+  function castApprovalVote(){
+    approvalCount += 1;
   }
 
   function refundOriginator(){
