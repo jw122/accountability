@@ -6,6 +6,7 @@ contract Accountability {
   /*mapping (uint => Goal) goalMap;*/
   Goal public goal;
   uint public approvalCount;
+  bool public refundIssued;
 
   struct Goal {
     string name;
@@ -20,6 +21,8 @@ contract Accountability {
   function Accountability() payable{
     // constructor
     originator = msg.sender;
+    approvalCount = 0;
+    refundIssued = false;
   }
 
   function setGoal(string _name, string _description, string _deliverableUrl,
@@ -50,6 +53,7 @@ contract Accountability {
 
   function refundOriginator(){
     originator.transfer(this.balance);
+    refundIssued = true;
   }
 
   function () payable{

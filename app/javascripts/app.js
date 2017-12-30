@@ -251,7 +251,15 @@ function castVote(vote){
        console.log(ret);
        $("#msg").show();
        $("#msg").html("Your approval vote was successfully cast. Thank you for voting!");
-      })
+
+       i.refundIssued.call().then(function(refunded){
+         console.log("refunded: ", refunded);
+         if (refunded == true) {
+           $("#goal-approved-msg").append("<h3>Success! After a majority of judges approved the deliverable, the originator has been refunded for achieving their goal.</h3>")
+         }
+       });
+     });
+
     })
   } else {
     $("#msg").show();
