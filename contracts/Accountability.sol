@@ -7,6 +7,7 @@ contract Accountability {
   Goal public goal;
   uint public approvalCount;
   bool public refundIssued;
+  uint public goalStartTime;
 
   struct Goal {
     string name;
@@ -29,6 +30,7 @@ contract Accountability {
     string _deliverableImageUrl, string _judge1Email, string _judge2Email, string _judge3Email) payable {
 
     goal = Goal(_name, _description, _deliverableUrl, _deliverableImageUrl, _judge1Email, _judge2Email, _judge3Email);
+    goalStartTime = now;
   }
 
   function getGoal() returns (string, string, string, string, string, string, string){

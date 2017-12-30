@@ -240,8 +240,11 @@ function renderGoalDetails() {
    if (p[3].length > 0){ // if there is actually a deliverable image
      $("#goal-final-image").append("<img src='https://ipfs.io/ipfs/" + p[3] + "' width='250px' />");
    }
-  })
-})
+   if (p[0].length > 0) { // if goal has been set (aka it has a name)
+     getRemainingTime(getCountdown);
+   }
+ });
+});
 }
 
 function castVote(vote){
@@ -264,6 +267,54 @@ function castVote(vote){
   } else {
     $("#msg").show();
     $("#msg").html("Thank you for voting!");
+  }
+}
+
+function getCurrentTimeInSeconds(){
+ return Math.round(new Date() / 1000);
+}
+
+function getRemainingTime(callback) {
+ let current_time = getCurrentTimeInSeconds()
+ var goal_start_time;
+ var goal_end_time;
+ var remaining_seconds;
+ var today = new Date();
+ var finalCountdown;
+
+ Accountability.deployed().then(function(i){
+   i.goalStartTime.call().then(function(t){
+     goal_start_time = t;
+     goal_end_time = parseInt(goal_start_time) + (30*24*60*60); // end time is start time + 30 days
+     remaining_seconds = goal_end_time - current_time;
+     if (callback) {
+       finalCountdown = callback(remaining_seconds);
+     }
+   });
+ });
+}
+
+function getCountdown(remaining_seconds){
+  if (remaining_seconds <= 0) {
+   return "Goal period has ended";
+  }
+
+  let days = Math.trunc(remaining_seconds / (24*60*60));
+
+  remaining_seconds -= days*24*60*60 // subtract number of days (in seconds) from total seconds
+  let hours = Math.trunc(remaining_seconds / (60*60));
+
+  remaining_seconds -= hours*60*60 // subtract number of hours (in seconds) from total seconds
+  let minutes = Math.trunc(remaining_seconds / 60);
+
+  if (days > 0) {
+   $("#countdown").html("Goal due in " + days + " days, " + hours + ", hours, " + minutes + " minutes");
+  } else if (hours > 0) {
+   $("#countdown").html("Goal due in " + hours + " hours, " + minutes + " minutes ");
+  } else if (minutes > 0) {
+   $("#countdown").html("Goal due in " + minutes + " minutes ");
+  } else {
+   $("#countdown").html("Goal due in " + remaining_seconds + " seconds");
   }
 }
 
