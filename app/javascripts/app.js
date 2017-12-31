@@ -14,7 +14,8 @@ var Accountability = contract(accountability_artifacts);
 
 const ipfsAPI = require('ipfs-api');
 const ethUtil = require('ethereumjs-util');
-const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});
+// const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});
+const ipfs = ipfsAPI({host: 'ipfs.infura.io', port: '5001', protocol: 'http'});
 
 window.App = {
   start: function() {
