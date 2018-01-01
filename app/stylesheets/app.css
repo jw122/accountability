@@ -1,8 +1,9 @@
 body {
   margin-left: 25%;
   margin-right: 25%;
-  margin-top: 10%;
-  font-family: "Open Sans", sans-serif;
+  margin-top: 5%;
+  /*font-family: "Helvetica", sans-serif;*/
+  font-family: 'Assistant', sans-serif;
 }
 
 label {
@@ -39,8 +40,16 @@ h3 {
   font-size: 24px;
 }
 
+p{
+  font-style: italic;
+}
 .black {
   color: black;
+}
+
+.jumbotron {
+   background: rgb(255, 255, 255); /* This is for ie8 and below */
+   background: rgba(255, 255, 255, 0.5);
 }
 
 #balance {

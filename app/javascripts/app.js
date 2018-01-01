@@ -14,8 +14,8 @@ var Accountability = contract(accountability_artifacts);
 
 const ipfsAPI = require('ipfs-api');
 const ethUtil = require('ethereumjs-util');
-// const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});
-const ipfs = ipfsAPI({host: 'ipfs.infura.io', port: '5001', protocol: 'http'});
+const ipfs = ipfsAPI({host: 'localhost', port: '5001', protocol: 'http'});
+// const ipfs = ipfsAPI({host: 'ipfs.infura.io', port: '5001', protocol: 'http'});
 
 window.App = {
   start: function() {
@@ -106,7 +106,13 @@ function renderGoal() {
     /* stores the return of the function i.getGoal.call(1) inside the b value and passes it to buildGoal.
     Then, append the result of that buildGoal() to goal-list */
     i.getGoal.call().then(function(g) {
-      console.log("got goal!");
+      if (g[0].length > 0){
+        console.log("got goal!");
+        $("#view-goal-btn").show();
+      } else {
+        console.log("no goals yet.");
+        $("#create-goal-btn").show();
+      }
      $("#goal-list").append(buildGoal(g));
     });
   });
@@ -118,10 +124,14 @@ row class in index.html */
 function buildGoal(goal) {
 
   let node = $("<div/>");
-  node.addClass("col-sm-3 text-center col-margin-bottom-1");
+  node.addClass("col-sm-12 col-margin-bottom-1");
   // node.append("<img src='https://ipfs.io/ipfs/" + product[3] + "' width='150px' />"); // image of the goal
-  node.append("<div>" + goal[0]+ "</div>"); // name of the goal
-  node.append("<div>" + goal[1]+ "</div>"); // description of the goal
+  if (goal[0].length > 0) {
+    node.append("<div><h4>" + goal[0]+ "</h4></div>"); // name of the goal
+    node.append("<div><p>" + goal[1]+ "</p></div>"); // description of the goal
+  } else {
+    node.append("<div><h4>No goals yet. Create one!</h4></div>");
+  }
   return node;
 }
 
@@ -231,6 +241,7 @@ function renderGoalDetails() {
       stream.on('data', function(chunk) {
       // append the read chunk to the content string
       content += chunk.toString();
+      $("#goal-final-deliverable").show();
       $("#goal-final-deliverable").append("<div>" + content+ "</div>");
       })
      });
@@ -239,6 +250,7 @@ function renderGoalDetails() {
    $("#goal-name").append("<div>" + p[0]+ "</div>");
    $("#goal-desc").append("<div>" + p[1]+ "</div>");
    if (p[3].length > 0){ // if there is actually a deliverable image
+     $("#goal-final-image").show();
      $("#goal-final-image").append("<img src='https://ipfs.io/ipfs/" + p[3] + "' width='250px' />");
    }
    if (p[0].length > 0) { // if goal has been set (aka it has a name)

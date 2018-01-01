@@ -4,86 +4,91 @@
  <title>Accountability</title>
  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+ <link href="https://fonts.googleapis.com/css?family=Assistant" rel="stylesheet">
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src="./app.js"></script>
 </head>
 <body>
- <div class="container">
-  <h1 class="text-center">Goal Details</h1>
+ <div class="container" >
+   <div style="margin-bottom:5px">
+   <a href="/">< Home</a>
+   </div>
+  <h1 class="text-center" style="color:#71a3f2">Goal Details</h1>
    <div class="row" id="goal-details">
-    <div style="display: none;" class="alert alert-success" id="msg"></div>
-    <div id="goal-approved-msg"></div>
-      <div id="countdown"></div>
+    <div style="display: none;" class="alert alert-success col-sm-7" id="msg"></div>
+    <div id="goal-approved-msg" class="col-sm-6"></div>
+      <div id="countdown" class="col-sm-12"></div>
       <div id="goal-name" class="col-sm-12">
-        <h4>Title:</h4>
+        <h4 style="color:#71a3f2">Title:</h4>
       </div>
 
       <div id="goal-end"></div>
 
       <div id="goal-desc" class="col-sm-12">
-       <h4>Description:</h4>
+       <h4 style="color:#71a3f2">Description:</h4>
       </div>
 
-      <div id="goal-final-deliverable" class="col-sm-12">
-       <h4>Link to final deliverable:</h4>
+      <div id="goal-final-deliverable" style="display:none;" class="col-sm-12">
+       <h4 style="color:#71a3f2;">Link to final deliverable:</h4>
       </div>
 
-      <div id="goal-final-image" class="col-sm-12">
-       <h4>Image of deliverable:</h4>
+      <div id="goal-final-image" style="display:none;" class="col-sm-12">
+       <h4 style="color:#71a3f2;">Image of deliverable:</h4>
       </div>
 
    </div>
-   <br>
 
-   <form class="form-horizontal col-sm-5" id="submit-deliverable">
+   <form class="form-horizontal col-sm-8" id="submit-deliverable" style="padding-left:0">
      <div class="form-group">
-        <label for="deliverable" class="col-sm-2 control-label">Deliverable Link</label>
-        <div class="col-sm-10">
+        <label for="deliverable" class="col-sm-3 control-label" style="text-align:left">Deliverable Link</label>
+        <div class="col-sm-9">
          <!-- <textarea class="form-control" name="deliverable" rows="8" id="deliverable" placeholder="Submit your deliverable"></textarea> -->
          <input type="text" name="deliverable" class="form-control" id="deliverable" placeholder="Submit your deliverable" ></input>
         </div>
     </div>
 
     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-       <button type="submit" class="btn btn-primary">Submit Deliverable</button>
+      <div class="col-sm-offset-3 col-sm-10">
+       <button type="submit" class="btn btn-success">Submit Deliverable</button>
       </div>
      </div>
   </form>
 
-  <form class="form-horizontal col-sm-5" id="submit-image">
+  <form class="form-horizontal col-sm-8" id="submit-image" style="padding-left:0">
 
    <div class="form-group">
-    <label for="goal-image" class="col-sm-2 control-label">Upload image of deliverable</label>
-    <div class="col-sm-10">
+    <label for="goal-image" class="col-sm-3 control-label" style="text-align:left">Deliverable Image</label>
+    <div class="col-sm-9">
      <input type="file" name="goal-image" class="form-control" id="goal-image" required="required">
     </div>
    </div>
 
    <div class="form-group">
-     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-primary">Submit Image of Deliverable</button>
+     <div class="col-sm-offset-3 col-sm-10">
+      <button type="submit" class="btn btn-success">Submit Image of Deliverable</button>
      </div>
    </div>
  </form>
  </div>
 
- <div class="container" id="judge-section">
-   <form class="form-horizontal col-sm-5" id="submit-vote1">
-    <h1 class="text-center">Judge Section</h1>
-    <div class="form-group">
+<hr>
+
+ <div class="container" id="judge-section" style="margin-bottom:25px">
+   <form class="form-horizontal col-sm-8" id="submit-vote1">
+    <h1 class="text-center" style="color:#71a3f2;">Judge Section</h1>
+    <div class="form-group" style="margin-top:10px;">
      <label for="judge1-vote" class="col-sm-2 control-label">Judge #1 Vote</label>
      <div class="col-sm-10">
        <select name="vote" id="vote1">
          <option value="approve">Approve</option>
          <option value="disapprove">Disapprove</option>
        </select>
-       <button type="submit" class="btn btn-primary">Submit Vote</button>
+       <button type="submit" class="btn btn-info btn-sm">Submit Vote</button>
      </div>
     </div>
    </form>
 
-     <form class="form-horizontal col-sm-5" id="submit-vote2">
+     <form class="form-horizontal col-sm-8" id="submit-vote2">
       <div class="form-group">
        <label for="judge1-vote" class="col-sm-2 control-label">Judge #2 Vote</label>
        <div class="col-sm-10">
@@ -91,12 +96,12 @@
            <option value="approve">Approve</option>
            <option value="disapprove">Disapprove</option>
          </select>
-         <button type="submit" class="btn btn-primary">Submit Vote</button>
+         <button type="submit" class="btn btn-info btn-sm">Submit Vote</button>
        </div>
       </div>
      </form>
 
-       <form class="form-horizontal col-sm-5" id="submit-vote3">
+       <form class="form-horizontal col-sm-8" id="submit-vote3">
         <div class="form-group">
          <label for="judge1-vote" class="col-sm-2 control-label">Judge #3 Vote</label>
          <div class="col-sm-10">
@@ -104,7 +109,7 @@
              <option value="approve">Approve</option>
              <option value="disapprove">Disapprove</option>
            </select>
-           <button type="submit" class="btn btn-primary">Submit Vote</button>
+           <button type="submit" class="btn btn-info btn-sm">Submit Vote</button>
          </div>
         </div>
        </form>

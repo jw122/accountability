@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
- <title>Accountability dApp</title>
+ <title>Ether Goals</title>
  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
- <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<!-- Google font -->
+ <link href="https://fonts.googleapis.com/css?family=Assistant" rel="stylesheet">
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src="./app.js"></script>
+ <style media="screen">
+   body {
+    background-image: url("app/assets/notebook.jpg");
+   }
+ </style>
 </head>
 <body>
- <div class="container-fluid">
-  <h1>Accountability</h1>
-  <a href="list-goal.html" class="btn btn-primary">Create a Goal</a>
+  <div class="jumbotron jumbotron-fluid d-flex">
 
-  <div class="row">
-   <div class="col-sm-2">
-    <div id="categories">
-    </div>
-   </div>
-   <div class="col-sm-10">
-
-    <!-- for when we enable more than 1 goal -->
-    <div class="row">
-     <h2 class="text-center">Goals</h2>
-     <div class="row">
-      <div class="row" id="goal-list">
+    <div class="container">
+      <h1>Ether Goals</h1>
+      <div style="padding-top:5%">
+        <h2 style="color:#487EC4">My Goals</h2>
       </div>
-     </div>
-    </div>
+      <div id="goal-list" class="row">
+        <!-- Goal information goes here -->
+      </div>
 
-   </div>
+      <!-- Buttons -->
+      <div style="margin-top:10px">
+        <a href="list-goal.html" style="display: none;" id="create-goal-btn" class="btn btn-success">Create a Goal</a>
+        <a href="goal.html" style="display: none;" id="view-goal-btn" class="btn btn-primary">View Goal Status</a>
+      </div>
+
+    </div>
   </div>
 
- </div>
 </body>
 </html>

@@ -24,6 +24,7 @@ contract Accountability {
     originator = msg.sender;
     approvalCount = 0;
     refundIssued = false;
+    goal = Goal("", "", "", "", "", "", "");
   }
 
   function setGoal(string _name, string _description, string _deliverableUrl,
